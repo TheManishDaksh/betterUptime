@@ -4,15 +4,15 @@
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest",
-    "prisma": "^6.8.2"
+    "prisma": "^6.17.1"
   },
-  "exports":{
-    "./client" : "./index.ts"
+  "exports": {
+    "./client": "./index.ts"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@prisma/client": "^6.8.2"
+    "@prisma/client": "^6.17.1"
   }
 }
