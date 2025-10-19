@@ -1,17 +1,18 @@
-import express, { json } from "express";
+import express from "express";
 import cors from "cors";
 import bcrypt from "bcrypt";
 import { prisma } from "store/client";
+import Jwt from "jsonwebtoken";
+import dotenv from "dotenv"
 
-const app = express();
-app.use(express.json());
-app.use(cors())
+const signUpRouter = express.Router();
+dotenv.config();
 
-app.get("/signup", async(req, res)=>{
+signUpRouter.post("/", async(req, res)=>{
     const { name, password, email } = req.body;
 
     try{
-        const user = await prisma.user.findfirst({
+        const user = await prisma.user.findFirst({
             where : email
         })
         if(user){
@@ -27,16 +28,18 @@ app.get("/signup", async(req, res)=>{
                 hashedPassword
             }
         });
-        if(user){
-            res.status(201).json({message : "user has been created"});
-            res.json({userId : user.id,
-                name : name
-            });
+        if(!user){
+        res.status(401).json({message : "can't create the user"});
         }
+        const jwtSecret = process.env.JWT_SECRET;
+        const token = Jwt.sign( {id : user.id}, jwtSecret || "msnisfhMNAID73949");
+        res.json({
+            token
+        })
         }catch{
-            res.status(500).json({message : "user not created"});
+            res.status(500).json({message : "can't signup this guy"});
         }
     }
-
-
 })
+
+export default signUpRouter;
