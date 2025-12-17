@@ -1,5 +1,4 @@
 import express from "express";
-import cors from "cors";
 import { prisma } from "store/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
