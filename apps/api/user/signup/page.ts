@@ -1,8 +1,8 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import { prisma } from "store/client";
 import Jwt from "jsonwebtoken";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
+import { prisma } from "store";
 
 const signUpRouter = express.Router();
 dotenv.config();
@@ -24,7 +24,7 @@ signUpRouter.post("/", async(req, res)=>{
             data : {
                 name,
                 email,
-                hashedPassword
+                password : hashedPassword
             }
         });
         if(!user){
@@ -35,8 +35,8 @@ signUpRouter.post("/", async(req, res)=>{
         res.json({
             token
         })
-        }catch{
-            res.status(500).json({message : "can't signup this guy"});
+        }catch(error){
+            res.status(500).json({message : error});
         }
     }
 })

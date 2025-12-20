@@ -8,6 +8,6 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/auth/signin', signinRouter );
-app.use('/auth/signup', signUpRouter        )
+app.use('/auth/signup', signUpRouter )
 
 app.listen(process.env.PORT || 3000);
