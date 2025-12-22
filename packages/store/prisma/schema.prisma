@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -14,40 +8,40 @@ datasource db {
 }
 
 model User {
- id        String    @id  @default(uuid())
- email     String    @unique
- name      String?
- password  String    @unique
- websites  Website[]
+  id       String    @id @default(uuid())
+  email    String    @unique
+  name     String?
+  password String    @unique
+  websites Website[]
 }
 
 model Website {
- id            String   @id  @default(uuid())
- url           String
- user          User     @relation(references: [id], fields: [userId])
- userId        String
- timeAdded     DateTime
- ticks         WebsiteTick[]
+  id        String        @id @default(uuid())
+  url       String
+  userId    String
+  timeAdded DateTime
+  user      User          @relation(fields: [userId], references: [id])
+  ticks     WebsiteTick[]
 }
 
 model Region {
- id        String @id  @default(uuid())
- name      String
- ticks     WebsiteTick[]
+  id    String        @id @default(uuid())
+  name  String
+  ticks WebsiteTick[]
 }
 
 model WebsiteTick {
- id                  String  @id  @default(uuid())
- response_time_mc    Int
- status              WebsiteStatus
- region              Region   @relation(references: [id], fields: [region_id])
- website             Website  @relation(references: [id], fields: [website_id])
- region_id           String
- website_id          String
+  id               String        @id @default(uuid())
+  response_time_mc Int
+  status           WebsiteStatus
+  region_id        String
+  website_id       String
+  region           Region        @relation(fields: [region_id], references: [id])
+  website          Website       @relation(fields: [website_id], references: [id])
 }
 
 enum WebsiteStatus {
- up
- down
- unknown
+  up
+  down
+  unknown
 }
