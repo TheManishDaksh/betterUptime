@@ -15,8 +15,7 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true,
-      "env": ["DATABASE_URL", "JWT_SECRET"]
+      "persistent": true
     }
   }
 }
