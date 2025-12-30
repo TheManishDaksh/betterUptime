@@ -1,0 +1,1 @@
+console.log("main page of application where navigation and routing begins");
