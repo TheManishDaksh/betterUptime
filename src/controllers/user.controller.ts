@@ -1,5 +1,5 @@
-import { User } from "../models/user.model";
-import { ApiError } from "../utils/ApiError";
+import { User } from "../models/user.model.ts";
+import { ApiError } from "../utils/ApiError.ts";
 import type{ Request, Response } from "express";
 
 const signupUser = async function (req:Request, res:Response) {
@@ -42,7 +42,21 @@ const signupUser = async function (req:Request, res:Response) {
     }
 }
 
+const loginUser = async function(req:Request, res:Response){
+    const { username, email, password } = req.body;
 
+    if(!email && !password){
+        throw new ApiError(402, "Email & Password are mandatory");
+    }
+    
+    const existingUser = await User.findOne({
+        $or : [ {username}, {email}]
+    })
+    if(!existingUser){
+        throw new ApiError(400, "User not found in login");
+    }
+    // const validatePassword = await existingUser.isPasswordCorrect(password)
+}
 
 export {
     signupUser

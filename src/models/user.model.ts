@@ -32,13 +32,9 @@ const userSchema = new Schema(
     }
 )
 
-userSchema.pre("save", async function(next) {
-    //@ts-ignore
-    if(!this.isModified("password")) return next();
-    //@ts-ignore
+userSchema.pre("save", async function() {
+    if(!this.isModified("password")) return;
     this.password = await bcrypt.hash(this.password, 10);
-    //@ts-ignore
-    next();
 })
 
 userSchema.methods.isPasswordCorrect = async function(password:any) {
