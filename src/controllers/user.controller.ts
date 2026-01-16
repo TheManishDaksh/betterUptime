@@ -1,6 +1,25 @@
+import type { Types } from "mongoose";
 import { User } from "../models/user.model.ts";
 import { ApiError } from "../utils/ApiError.ts";
 import type{ Request, Response } from "express";
+
+const generateAccessAndRefreshToken= async(userId:Types.ObjectId)=>{
+    try{
+        const user =  await User.findById(userId);
+        if(!user){
+            throw new ApiError(400, "user not found on accessing of generating access and refresh token for user auth")
+        }
+
+    const accessToken = user?.generateAccessToken();
+    const refreshToken = user?.generateRefreshToken();
+    
+    user.refreshToken = refreshToken;
+    await user?.save({validateBeforeSave : false});
+    return { accessToken, refreshToken};
+    }catch(error){
+        throw new ApiError( 400, "something went wrong generating access and refresh token");
+    }
+}
 
 const signupUser = async function (req:Request, res:Response) {
     const { username, email, password } = req.body;
@@ -55,9 +74,21 @@ const loginUser = async function(req:Request, res:Response){
     if(!existingUser){
         throw new ApiError(400, "User not found in login");
     }
-    // const validatePassword = await existingUser.isPasswordCorrect(password)
+    const verifyPassword = await existingUser.isPasswordValid(password);
+    if(!verifyPassword){
+        throw new ApiError(400, "Password is not matching");
+    }
+
+    const { accessToken, refreshToken } = await generateAccessAndRefreshToken(existingUser._id);
+    const loggedInUser = await User.findById(existingUser._id).select("-password, -refreshToken");
+
+    return res.status(200).cookie("accessToken", accessToken).cookie("refreshToken", refreshToken).json({
+        user: loggedInUser, accessToken, refreshToken,
+        message : "User logged In Successfully"
+    })
 }
 
 export {
-    signupUser
+    signupUser,
+    loginUser
 }

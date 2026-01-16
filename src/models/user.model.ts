@@ -1,10 +1,26 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import dotenv from 'dotenv'
-dotenv.config({path : "../../.env"})
+import dotenv from 'dotenv';
+import { ApiError } from "../utils/ApiError.ts";
+dotenv.config({path : "../../.env"});
 
-const userSchema = new Schema(
+export interface UserSchema{
+    username : string;
+    email : string;
+    password : string;
+    websites : Schema.Types.ObjectId;
+    refreshToken : string;
+}
+
+export interface UserMethods{
+    isPasswordValid(password:string) : boolean;
+    generateAccessToken() : string;
+    generateRefreshToken() : string;
+}
+
+export interface UserDocument extends UserSchema, UserMethods, Document{}
+const userSchema = new Schema<UserDocument>(
     {
         username : {
             type : String,
@@ -26,6 +42,9 @@ const userSchema = new Schema(
         websites : {
             type : Schema.Types.ObjectId,
             ref : "Website"
+        },
+        refreshToken : {
+            type : String
         }
     },{
         timestamps : true
@@ -33,35 +52,39 @@ const userSchema = new Schema(
 )
 
 userSchema.pre("save", async function() {
-    if(!this.isModified("password")) return;
+    if(!this.isModified("password")) return ;
     this.password = await bcrypt.hash(this.password, 10);
 })
 
-userSchema.methods.isPasswordCorrect = async function(password:any) {
+userSchema.methods.isPasswordCorrect = async function(password:string) {
    return await bcrypt.compare(password, this.password)
 }
 
-userSchema.methods.generateAccessToken = function(){
+const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET} = process.env;
+if(!ACCESS_TOKEN_SECRET && !REFRESH_TOKEN_SECRET){
+    throw new ApiError(402, "Env varibales are not loading");
+}
+
+userSchema.methods.generateAccessToken = function():string{
     return jwt.sign({
         id : this._id,
         username : this.username,
-        email : this.email,
-        password : this.password
+        email : this.email
     },  //@ts-ignore
-        process.env.ACCESS_TOKEN_SECRET,
+        ACCESS_TOKEN_SECRET ,
     {
         expiresIn: process.env.ACCESS_TOKEN_EXPIRY
     })
 }
 
-userSchema.methods.generateRefreshToken = function(){
+userSchema.methods.generateRefreshToken = function():string{
     return jwt.sign({
         id : this._id
     },  //@ts-ignore
-        process.env.REFRESH_TOKEN_SECRET,
+        REFRESH_TOKEN_SECRET ,
         {
             expiresIn : process.env.REFRESH_TOKEN_EXPIRY
         }
 )
 }
-export const User = mongoose.model("User", userSchema);
+export const User = mongoose.model<UserDocument>("User", userSchema);
