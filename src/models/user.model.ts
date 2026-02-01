@@ -6,10 +6,10 @@ import { ApiError } from "../utils/ApiError.ts";
 dotenv.config({path : "../../.env"});
 
 export interface UserSchema{
-    username : string;
+    username? : string;
     email : string;
     password : string;
-    websites : Schema.Types.ObjectId;
+    websites? : Schema.Types.ObjectId;
     refreshToken : string;
 }
 

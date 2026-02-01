@@ -128,7 +128,7 @@ const resetPassword = async function (req: Request, res: Response) {
         throw new ApiError(300, "Both passwords are mandatory");
     }
     try {
-                //@ts-ignore
+            //@ts-ignore
         const user = await User.findById(req.user?._id);
         if (!user) {
             throw new ApiError(401, "user not found in resetting password");

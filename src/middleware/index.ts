@@ -25,6 +25,6 @@ export const verifyJwtMiddleware = async function(req:Request, res:Response, nex
     req.user = user;
     next();
     }catch(error){
-        throw new ApiError(402, `Error in JwtMiddleware ${error}`);
+        throw new ApiError(402, `Error in JwtMiddleware : ${error}`);
     }
 }

@@ -1,6 +1,16 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 
-const websiteSchema = new Schema(
+export interface websiteTypes {
+    url : string,
+    userId : Schema.Types.ObjectId,
+    timeAdded : Number,
+    status : string,
+    lastStatusChange : Number
+}
+
+export interface websiteDocument extends websiteTypes, Document{}
+
+const websiteSchema = new Schema<websiteDocument>(
     {
         url : {
             type : String,
@@ -31,4 +41,4 @@ const websiteSchema = new Schema(
     }
 )
 
-export const Website = mongoose.model("Website", websiteSchema);
+export const Website = mongoose.model<websiteDocument>("Website", websiteSchema);

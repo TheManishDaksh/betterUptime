@@ -1,6 +1,15 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 
-const websiteTickSchema = new Schema(
+export interface websiteTickTypes {
+    websiteId : Schema.Types.ObjectId,
+    status : string,
+    respondTime : Number,
+    checkedAt : Number
+}
+
+export interface websiteTickDocument extends websiteTickTypes, Document{}
+
+const websiteTickSchema = new Schema<websiteTickDocument>(
     {
         websiteId : {
             type : Schema.Types.ObjectId,
@@ -26,4 +35,4 @@ const websiteTickSchema = new Schema(
     },{ timestamps : true }
 )
 
-export const WebsiteTick = mongoose.model("WebsiteTick", websiteTickSchema);
+export const WebsiteTick = mongoose.model<websiteTickDocument>("WebsiteTick", websiteTickSchema);
