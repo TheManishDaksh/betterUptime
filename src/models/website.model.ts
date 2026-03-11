@@ -23,7 +23,7 @@ const websiteSchema = new Schema<websiteDocument>(
             required : true
         },
         timeAdded : {
-            time : Date,
+            type : Date,
             default : Date.now()
         },
         status : {
@@ -33,7 +33,7 @@ const websiteSchema = new Schema<websiteDocument>(
             index : true
         },
         lastStatusChange : {
-            time : Date,
+            type : Date,
             default : Date.now()
         }
     },{

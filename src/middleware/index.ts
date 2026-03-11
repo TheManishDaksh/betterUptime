@@ -16,13 +16,13 @@ export const verifyJwtMiddleware = async function(req:Request, res:Response, nex
     if(!verifyToken){
         throw new ApiError(400, "token is not valid");
     }
-    //@ts-ignore    
-    const user = await User.findById(verifyToken._id).select("-password -refreshToken");
+    //@ts-ignore
+    const user = await User.findById(verifyToken._id ).select("-password -refreshToken");
     if(!user){
         throw new ApiError(404, "User not found in jwt middleware");
     }
-    //@ts-ignore
-    req.user = user;
+
+    req.userId = user._id;
     next();
     }catch(error){
         throw new ApiError(402, `Error in JwtMiddleware : ${error}`);
