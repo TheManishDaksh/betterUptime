@@ -4,7 +4,7 @@ import { ApiError } from "../utils/ApiError.ts";
 import { User } from "../models/user.model.ts";
 
 
-export const verifyJwtMiddleware = async function(req:Request, res:Response, next: NextFunction){
+export const authMiddleware = async function(req:Request, res:Response, next: NextFunction){
 
     const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer", "");
     if(!token){

@@ -8,14 +8,16 @@ const addWebsite = async(req : Request, res : Response)=>{
         throw new ApiError( 400, "Website url is necessary" );
     }
 
-    const websites = await Website.create({
+    const website = await Website.create({
         url : req.body.url,
         timeAdded : new Date(),
         userId : req.body.userId
     })
-
+    if(!website){
+        throw new ApiError(400, "error in adding website")
+    }
     res.json({
-       id : websites._id
+       id : website._id
     })
 }
 
