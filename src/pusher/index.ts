@@ -9,7 +9,9 @@ async function main(){
         id : w._id.toString()
     })))
 }
-main();
+
 setInterval(() => {
     main();
 }, 1*1000*60*60);
+
+main();

@@ -1,5 +1,6 @@
 import type { Types } from "mongoose";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import { User } from "../models/user.model.ts";
 import { ApiError } from "../utils/ApiError.ts";
 import type { Request, Response } from "express";
@@ -76,6 +77,7 @@ const loginUser = async function (req: Request, res: Response) {
             throw new ApiError(400, "User not found in login");
         }
         const verifyPassword = await existingUser.isPasswordValid(password);
+        // const verifyPassword = await bcrypt.compare(password, existingUser.password)
         if (!verifyPassword) {
             throw new ApiError(400, "Password is not matching");
         }

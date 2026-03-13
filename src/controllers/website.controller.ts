@@ -1,7 +1,7 @@
 import type { Request, Response } from "express"
-import { Website } from "../models/website.model"
-import { ApiError } from "../utils/ApiError"
-import { WebsiteTick } from "../models/websiteTick.model";
+import { Website } from "../models/website.model.ts"
+import { ApiError } from "../utils/ApiError.ts"
+import { WebsiteTick } from "../models/websiteTick.model.ts";
 
 const addWebsite = async(req : Request, res : Response)=>{
     if(!req.body.url){
@@ -11,7 +11,7 @@ const addWebsite = async(req : Request, res : Response)=>{
     const website = await Website.create({
         url : req.body.url,
         timeAdded : new Date(),
-        userId : req.body.userId
+        userId : req.userId
     })
     if(!website){
         throw new ApiError(400, "error in adding website")

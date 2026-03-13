@@ -13,6 +13,7 @@ async function main(){
     
     const websiteStatus = res.map(({message})=> fetchWebsite(message.id, message.url));
     await Promise.all(websiteStatus);
+    console.log(websiteStatus);
     await xAckBulk(consumerGroup, res.map(({id})=>id))
     }
 }

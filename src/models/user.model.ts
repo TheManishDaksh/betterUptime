@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
 import { ApiError } from "../utils/ApiError.ts";
-dotenv.config({path : "../../.env"});
+dotenv.config({path : "./.env"});
 
 export interface UserSchema{
     username? : string;
@@ -14,7 +14,7 @@ export interface UserSchema{
 }
 
 export interface UserMethods{
-    isPasswordValid(password:string) : boolean;
+    isPasswordValid(password:string) : Promise<boolean>;
     generateAccessToken() : string;
     generateRefreshToken() : string;
 }
@@ -56,7 +56,7 @@ userSchema.pre("save", async function() {
     this.password = await bcrypt.hash(this.password, 10);
 })
 
-userSchema.methods.isPasswordCorrect = async function(password:string) {
+userSchema.methods.isPasswordValid = async function(password:string) {
    return await bcrypt.compare(password, this.password)
 }
 
