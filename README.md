@@ -32,7 +32,7 @@
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) (>= 14.x)  
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- [npm](https://www.npmjs.com/) or [bun](https://bun.com/)
 
 ### Steps
 
@@ -40,3 +40,64 @@
    ```bash
    git clone https://github.com/TheManishDaksh/betterUptime.git
    cd betterUptime
+   ```
+
+2. **Install dependencies**
+   ```bash
+   bun install
+   ```
+
+3. **Configure environment (optional)**
+   - Copy `.env.example` to `.env` and set necessary values.
+
+4. **Start the application**
+   ```bash
+   bun run start
+   ```
+   Or for development with hot-reloading:
+   ```bash
+   bun run dev
+   ```
+
+---
+
+## ⚙️ Usage
+
+- Open `http://localhost:3000` in your browser (default port).
+- Add websites/services you want to monitor via the dashboard.
+- Customize monitoring preferences as needed.
+
+---
+
+## 📖 Project Structure
+
+```
+betterUptime/
+├── src/          # TypeScript source files
+├── public/       # Static assets
+├── tests/        # Test suites
+├── .env.example  # Example environment configuration
+└── README.md     # Project documentation
+```
+
+---
+
+## 📋 Roadmap
+
+- [ ] Add advanced alerting integrations (Slack, Email, SMS)
+- [ ] Implement authentication and user accounts
+- [ ] Improve dashboard UI/UX
+- [ ] Expand API features
+- [ ] Add plugin support
+
+---
+
+## 🙌 Acknowledgements
+
+- TypeScript
+- Node.js Ecosystem
+- Open Source Contributors
+
+---
+
+> Made with ❤️ by [TheManishDaksh](https://github.com/TheManishDaksh)
