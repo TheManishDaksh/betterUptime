@@ -8,7 +8,7 @@ async function main(){
         const res = await xReadGroup(consumerGroup, "Ind-1");
     if(!res){
         console.log("nothing to read ");
-        continue;
+        return;
     }
     
     const websiteStatus = res.map(({message})=> fetchWebsite(message.id, message.url));
