@@ -56,7 +56,7 @@ const websiteStatus =  async(req : Request, res : Response)=>{
     }
 
     const tick = await WebsiteTick.findOne({
-        _id : req.params.websiteId
+        websiteId : req.params.websiteId
     }).sort({ checkedAt : -1 });
 
     res.json({

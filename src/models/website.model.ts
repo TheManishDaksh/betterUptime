@@ -25,13 +25,7 @@ const websiteSchema = new Schema<websiteDocument>(
         timeAdded : {
             type : Date,
             default : Date.now()
-        },
-        status : {
-            type :String,
-            enum : ["up", "down"],
-            default : "up",
-            index : true
-        },
+        },  
         lastStatusChange : {
             type : Date,
             default : Date.now()
