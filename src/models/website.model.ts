@@ -1,38 +1,38 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface websiteTypes {
-    url : string,
-    userId : Schema.Types.ObjectId,
-    timeAdded : Number,
-    status : string,
-    lastStatusChange : Number
+    url: string,
+    userId: Schema.Types.ObjectId,
+    timeAdded: Number,
+    status: string,
+    lastStatusChange: Number
 }
 
-export interface websiteDocument extends websiteTypes, Document{}
+export interface websiteDocument extends websiteTypes, Document { }
 
 const websiteSchema = new Schema<websiteDocument>(
     {
-        url : {
-            type : String,
-            required :true,
-            trim : true
+        url: {
+            type: String,
+            required: true,
+            trim: true
         },
-        userId : {
-            type : Schema.Types.ObjectId,
-            ref : "User",
-            required : true
+        userId: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            required: true
         },
-        timeAdded : {
-            type : Date,
-            default : Date.now()
-        },  
-        lastStatusChange : {
-            type : Date,
-            default : Date.now()
+        timeAdded: {
+            type: Date,
+            default: Date.now()
+        },
+        lastStatusChange: {
+            type: Date,
+            default: Date.now()
         }
-    },{
-        timestamps : true
-    }
+    }, {
+    timestamps: true
+}
 )
 
 export const Website = mongoose.model<websiteDocument>("Website", websiteSchema);

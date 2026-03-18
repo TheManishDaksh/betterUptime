@@ -4,7 +4,8 @@ import { xAddBulk } from "../redis-streams";
 import { ApiError } from "../utils/ApiError";
 
 async function main(){
-    await connectDB().then(()=>{
+    try{
+        await connectDB().then(()=>{
         console.log("db is also connecting on pusher");
     }).catch((error)=>{
         throw new ApiError(500, `your server is not running on pusher and error is ${error}`);
@@ -16,6 +17,9 @@ async function main(){
         url : w.url,
         id : w._id.toString()
     })))
+    }catch(error){
+        throw new ApiError(500, "seems like having issue in db connection or in try catch in pusher");
+    }
 }
 
 setInterval(() => {
