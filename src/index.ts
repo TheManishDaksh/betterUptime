@@ -4,9 +4,6 @@ import { app } from './app.ts'
 import { ApiError } from './utils/ApiError.ts'
 dotenv.config({path : "./.env"})
 
-console.log("mongo in root"+process.env.MONGO_URL);
-console.log("mongo in root"+process.env.MONGO_URL);
-
 connectDB().then(()=>{    
     app.listen(process.env.PORT || 3000 , ()=>{
         console.log(`your app is listening on PORT : ${process.env.PORT}`);

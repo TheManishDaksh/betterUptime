@@ -20,7 +20,7 @@ const websiteTickSchema = new Schema<websiteTickDocument>(
         status : {
             type : String,
             enum : ["up", "down"],
-            default : "up",
+            default : null,
             required : true
         },
         respondTime : {

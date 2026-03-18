@@ -16,7 +16,7 @@ type MessageType = {
         id : string
     }
 }
-const streamName = "Betteruptime:websites";
+const streamName = "betteruptime:website";
 
 async function xAdd({url, id}:WebsiteEvent){
     await client.xAdd(

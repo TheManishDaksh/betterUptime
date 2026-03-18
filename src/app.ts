@@ -3,7 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { getCurrentUser, loginUser, logoutUser, refreshAccessToken, resetPassword, signupUser } from "./controllers/user.controller.ts";
 import { authMiddleware } from "./middleware/index.ts";
-import { addWebsite, deleteWebsite, websiteStatus } from "./controllers/website.controller.ts";
+import { addWebsite, deleteWebsite, getAllWebsite, websiteStatus } from "./controllers/website.controller.ts";
 
 const app = express();
 
@@ -23,5 +23,6 @@ app.get("/api/v1/me", authMiddleware, getCurrentUser);
 app.post("/api/v1/create-website", authMiddleware, addWebsite);
 app.delete("/api/v1/delete-website", authMiddleware, deleteWebsite);
 app.get("/api/v1/status/:websiteId", authMiddleware, websiteStatus);
+app.get("/api/v1/getAll", authMiddleware, getAllWebsite);
 
 export { app }

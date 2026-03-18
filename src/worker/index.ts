@@ -21,14 +21,17 @@ async function main(){
 }
 
 async function fetchWebsite(id:string, url:string) {
+    
+    // in this function there is printing the logs of pusher connecDB logs and db files logs also finout why
+    
     await connectDB().then(()=>{
-        console.log("db is also connecting on pusher");
+        console.log("db is also connecting on worker");
     }).catch((error)=>{
-        throw new ApiError(500, `your server is not running on pusher and error is ${error}`);
-    })
+        throw new ApiError(500, `your server is not running on worker and error is ${error}`);
+    })  
     const startTime = Date.now();
 
-    axios.get(url)
+    await axios.get(url)
     .then(async()=>{
         const endTime = Date.now();
         await WebsiteTick.create({

@@ -31,11 +31,24 @@ const deleteWebsite = async(req : Request, res : Response)=>{
     }
 }
 
+const getAllWebsite = async(req: Request, res  :Response)=>{
+    try{
+        const websites = await Website.find({
+            userId  :req.userId
+        })
+        res.json({
+            websites
+        })
+    }catch(error){
+        throw new ApiError(500, "db error website not found in db")
+    }
+}
+
 const websiteStatus =  async(req : Request, res : Response)=>{
     try{
         const website = await Website.findOne({
         userId : req.userId,
-        websiteId : req.params.websiteId
+        _id : req.params.websiteId
     })
 
     if(!website){
@@ -58,5 +71,6 @@ const websiteStatus =  async(req : Request, res : Response)=>{
 export {
     addWebsite,
     deleteWebsite,
-    websiteStatus
+    websiteStatus,
+    getAllWebsite
 }
