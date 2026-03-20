@@ -59,8 +59,18 @@ async function xAckBulk(consumerGroup: string, itemIds: string[]) {
     itemIds.map(itemId => xAck(consumerGroup, itemId))
 }
 
+async function LPush(key: string, value: string){
+    return await client.LPUSH( key, value);
+}
+
+async function RPop( key: string ) {
+    return await client.RPOP(key);
+}
+
 export {
     xAddBulk,
     xReadGroup,
-    xAckBulk
+    xAckBulk,
+    LPush,
+    RPop
 }

@@ -1,15 +1,26 @@
 import express from "express";
 import cors from "cors";
+import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 import { getCurrentUser, loginUser, logoutUser, refreshAccessToken, resetPassword, signupUser } from "./controllers/user.controller.ts";
 import { authMiddleware } from "./middleware/index.ts";
 import { addWebsite, deleteWebsite, getAllWebsite, websiteStatus } from "./controllers/website.controller.ts";
 
 const app = express();
+const limiter = rateLimit({
+	windowMs: 5 * 60 * 1000,
+	limit: 50, 
+	standardHeaders: 'draft-8', 
+	legacyHeaders: false, 
+	ipv6Subnet: 56,
+    message: "too much request you want to spoil my well written api",
+    statusCode: 429,
+})
 
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
+app.use(limiter);
 
 // user routes
 app.post("/api/v1/signup", signupUser);
