@@ -6,7 +6,7 @@ import { ApiError } from "../utils/ApiError";
 
 
 await connectDB().then(() => {
-            console.log("db is also connecting on alert-worker");
+            console.log("db is connecting on alert-worker");
         }).catch((error) => {
             throw new ApiError(500, `your server is not running on alert-worker and error is ${error}`);
         });
@@ -44,7 +44,7 @@ async function fetchLastTicks(websiteId: string) {
     
     await LPush("email", email);
     }catch(error){
-        throw new ApiError(500, "something got wrong in fetchlast tick")
+        throw new ApiError(500, "something got wrong in fetchLastticks function on alert-worker" + error)
     }
 }
 

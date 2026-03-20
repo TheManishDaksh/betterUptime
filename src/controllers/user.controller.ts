@@ -18,7 +18,7 @@ const generateAccessAndRefreshToken = async (userId: Types.ObjectId) => {
         await user?.save({ validateBeforeSave: false });
         return { accessToken, refreshToken };
     } catch (error) {
-        throw new ApiError(400, "something went wrong generating access and refresh token");
+        throw new ApiError(400, "something went wrong generating access and refresh token" + error);
     }
 }
 

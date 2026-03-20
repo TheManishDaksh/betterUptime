@@ -50,7 +50,7 @@ async function fetchWebsite(id: string, url: string) {
                 await LPush("alert", id);
             })
     } catch (error) {
-        throw new ApiError(500, "some db error for try catch in fetch website function")
+        throw new ApiError(500, "some db error in fetchWebsite function in first-worker" + error)
     }
 }
 

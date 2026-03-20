@@ -20,7 +20,7 @@ const addWebsite = async (req: Request, res: Response) => {
             id: website._id
         })
     } catch (error) {
-        throw new ApiError(500, "looks like some db error in adding website")
+        throw new ApiError(500, "looks like some db error in adding website" + error)
     }
 }
 
@@ -30,7 +30,7 @@ const deleteWebsite = async (req: Request, res: Response) => {
             _id: req.params.websiteId
         })
     } catch (error) {
-        throw new ApiError(400, "could not delete website , try again")
+        throw new ApiError(400, "could not delete website , try again" + error)
     }
 }
 
@@ -43,7 +43,7 @@ const getAllWebsite = async (req: Request, res: Response) => {
             websites
         })
     } catch (error) {
-        throw new ApiError(500, "db error website not found in db")
+        throw new ApiError(500, "db error website not found in db" + error)
     }
 }
 

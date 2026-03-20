@@ -18,7 +18,7 @@ async function main(){
         id : w._id.toString()
     })))
     }catch(error){
-        throw new ApiError(500, "seems like having issue in db connection or in try catch in pusher");
+        throw new ApiError(500, "seems like having issue in pusher" + error);
     }
 }
 
