@@ -19,7 +19,6 @@ async function main() {
             await new Promise(r => setTimeout(r, 1000*5));
             continue;
         }
-
         await fetchLastTicks(websiteId);
     }
 }
